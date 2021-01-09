@@ -172,8 +172,8 @@ wstring readFromFile(string path) {
 vector<wstring> readVectorFromFile(string path) {
 	wifstream myFile;
 	vector<wstring> readStrings;
-	vector<wstring>::iterator it;
-	it = readStrings.begin();
+	//vector<wstring>::iterator it;
+	//it = readStrings.begin();
 	myFile.imbue(std::locale(myFile.getloc(), new std::codecvt_utf8_utf16<wchar_t>));
 	myFile.open(path);
 	wstring line;
@@ -181,7 +181,8 @@ vector<wstring> readVectorFromFile(string path) {
 	{
 		while (getline(myFile, line))
 		{
-			it = readStrings.insert(it,line);
+			//it = readStrings.insert(it,line);
+			readStrings.push_back(line);
 		}
 		myFile.close();
 	}
