@@ -214,10 +214,12 @@ wstring convertToWstring(string str)
 const int NUM_TICKETS = 4;
 const int NUM_QUESTS_IN_TICKET = 16;
 
-void printRandomQuestion() {
+void printRandomQuestion(int& ticket, int& quest) {
 	unsigned rand_choice = rand();
-	cout << u8"Номер билета: " << (rand_choice / NUM_QUESTS_IN_TICKET % NUM_TICKETS + 1) << std::endl;
-	cout << u8"Номер вопроса: " << (rand_choice % NUM_QUESTS_IN_TICKET + 1) << std::endl;
+	ticket = (rand_choice / NUM_QUESTS_IN_TICKET % NUM_TICKETS + 1);
+	quest = (rand_choice % NUM_QUESTS_IN_TICKET + 1);
+	cout << u8"Номер билета: " << ticket << std::endl;
+	cout << u8"Номер вопроса: " << quest << std::endl;
 }
 
 int main(int argc, char* argv[]) {	
@@ -247,11 +249,15 @@ int main(int argc, char* argv[]) {
 
 	cout << endl <<"--------------------------------------" << endl;
 	cout << u8"Дополнительные вопросы: " << endl;
-	printRandomQuestion();
+	int ticket1, quest1;
+	printRandomQuestion(ticket1, quest1);
 	cout << endl;
-	printRandomQuestion();
+	int ticket2, quest2;
+	printRandomQuestion(ticket2, quest2);
 	writeJsonToFile(groupListJson, pathToGroupTickets);
-	wstring infoString = convertToWstring(group) + L" " + name + L" " + surname + L" Вопросы номер: " + convertToWstring(questionNumber1) + L" , " + convertToWstring(questionNumber2) + L"\n";
+	wstring infoString = convertToWstring(group) + L" " + name + L" " + surname + L" Вопросы номер: " + convertToWstring(questionNumber1) + L" , " + convertToWstring(questionNumber2) +
+		 L" + " + to_wstring(ticket1) + L"/" + to_wstring(quest1) + 
+		 L" + " +to_wstring(ticket2) + L"/" + to_wstring(quest2) + L"\n";
 	writeToFile(pathToInfoFile, infoString);
 
 }
